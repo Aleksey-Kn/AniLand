@@ -1,5 +1,6 @@
 package org.github.aleksey_kn.aniland;
 
+import org.github.aleksey_kn.aniland.init.TestcontainersConfiguration;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;

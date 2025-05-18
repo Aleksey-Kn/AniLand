@@ -1,5 +1,6 @@
-package org.github.aleksey_kn.aniland;
+package org.github.aleksey_kn.aniland.init;
 
+import org.github.aleksey_kn.aniland.AniLandApplication;
 import org.springframework.boot.SpringApplication;
 
 public class TestAnilandApplication {

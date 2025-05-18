@@ -1,2 +1,22 @@
 server:
   port: 8181
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    properties:
+      hibernate:
+        connection:
+          characterEncoding: utf-8
+          CharSet: utf-8
+          useUnicode: true
+        default_schema: aniland
+        enable_lazy_load_no_trans: false
+    open-in-view: false
+    show-sql: false
+  datasource:
+    url: jdbc:postgresql://localhost:5432/aniland
+    username: postgres
+    password: 123456
+    driver-class-name: org.postgresql.Driver
