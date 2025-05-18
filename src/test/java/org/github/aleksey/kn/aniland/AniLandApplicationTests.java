@@ -1,6 +1,6 @@
-package org.github.aleksey_kn.aniland;
+package org.github.aleksey.kn.aniland;
 
-import org.github.aleksey_kn.aniland.init.TestcontainersConfiguration;
+import org.github.aleksey.kn.aniland.init.TestcontainersConfiguration;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
@@ -9,8 +9,8 @@ import org.springframework.context.annotation.Import;
 @SpringBootTest
 class AniLandApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+    @Test
+    void contextLoads() {
 
+    }
 }

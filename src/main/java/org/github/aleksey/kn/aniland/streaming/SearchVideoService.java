@@ -1,4 +1,4 @@
-package org.github.aleksey_kn.aniland.streaming;
+package org.github.aleksey.kn.aniland.streaming;
 
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -15,6 +15,8 @@ public class SearchVideoService {
         final Resource videoResource = new UrlResource(videoPath.toUri());
         if (videoResource.exists()) {
             return videoResource;
-        } else throw new VideoNotFoundException(videoName);
+        } else {
+            throw new VideoNotFoundException(videoName);
+        }
     }
 }
