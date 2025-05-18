@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -33,8 +34,6 @@ public class StreamingController {
             final long rangeEnd = range.getRangeEnd(contentLength);
             if (rangeStart < 0) {
                 throw new IllegalRangeStartException("Range start must be non-negative");
-            } else if (rangeStart >= rangeEnd) {
-                throw new IllegalRangeStartException("Range start must be less than end");
             }
             final long rangeLength = rangeEnd - rangeStart + 1;
             final byte[] partialContent = new byte[(int) rangeLength];
@@ -58,13 +57,13 @@ public class StreamingController {
 
     @ExceptionHandler(VideoNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public String handleVideoNotFound(final VideoNotFoundException exception) {
-        return "{\"reason\":\"" + exception.getMessage() + "\"}";
+    public Map<String, String> handleVideoNotFound(final VideoNotFoundException exception) {
+        return Map.of("reason", exception.getMessage());
     }
 
-    @ExceptionHandler(IllegalRangeStartException.class)
+    @ExceptionHandler(IllegalArgumentException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public String handleIllegalRangeStart(final IllegalRangeStartException exception) {
-        return "{\"reason\":\"" + exception.getMessage() + "\"}";
+    public Map<String, String> handleIllegalRangeStart(final IllegalArgumentException exception) {
+        return Map.of("reason", exception.getMessage());
     }
 }
