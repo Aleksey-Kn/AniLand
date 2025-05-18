@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.utility.DockerImageName;
 
+@SuppressWarnings("PMD.TestClassWithoutTestCases")
 @TestConfiguration(proxyBeanMethods = false)
 public class TestcontainersConfiguration {
 

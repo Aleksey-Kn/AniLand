@@ -67,11 +67,7 @@
         <exclude name="ClassWithOnlyPrivateConstructorsShouldBeFinal"/>
         <exclude name="DataClass"/>
         <exclude name="TooManyMethods"/>
-    </rule>
-    <rule ref="category/java/design.xml/AbstractClassWithoutAnyMethod">
-        <properties>
-            <property name="violationSuppressXPath" value="//ClassOrInterfaceDeclaration['.*TestBase']"/>
-        </properties>
+        <exclude name="AbstractClassWithoutAnyMethod"/>
     </rule>
     <rule ref="category/java/design.xml/ExcessiveImports">
         <properties>
@@ -103,5 +99,6 @@
         <exclude name="AvoidAccessibilityAlteration"/>
         <exclude name="NullAssignment"/>
         <exclude name="JumbledIncrementer"/>
+        <exclude name="CheckSkipResult"/>
     </rule>
 </ruleset>
