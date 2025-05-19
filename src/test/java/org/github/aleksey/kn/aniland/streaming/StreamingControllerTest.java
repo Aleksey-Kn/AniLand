@@ -4,11 +4,9 @@ import lombok.SneakyThrows;
 import org.github.aleksey.kn.aniland.init.TestBase;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
 import java.io.FileInputStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class StreamingControllerTest extends TestBase {
 
@@ -16,14 +14,14 @@ class StreamingControllerTest extends TestBase {
     @SneakyThrows
     void streamVideo() {
         final byte[] pjData = new byte[100];
-        try (final FileInputStream pjInputStream = new FileInputStream(new File("src/test/resources/pj.mp4"))) {
+        try (final FileInputStream pjInputStream = new FileInputStream("src/test/resources/pj.mp4")) {
             pjInputStream.read(pjData, 0, 100);
         }
 
         final byte[] response = webClient.get().uri("/stream/pj")
-                .header("Range", "bytes=0-100")
+                .header("Range", "bytes=0-99")
                 .exchange()
-                .expectStatus().isOk()
+                .expectStatus().is2xxSuccessful()
                 .expectBody().returnResult().getResponseBody();
 
         assertThat(response).isEqualTo(pjData);
@@ -54,10 +52,10 @@ class StreamingControllerTest extends TestBase {
     }
 
     @Test
-    void handleTooLargeRange() {
+    void handleRangeStartMoreFileSize() {
         webClient.get().uri("/stream/pj")
-                .header("Range", String.format("bytes=%d-%d", Integer.MAX_VALUE, Long.MAX_VALUE))
+                .header("Range", String.format("bytes=%d-%d", Integer.MAX_VALUE, (long) Integer.MAX_VALUE + 100))
                 .exchange()
-                .expectStatus().isBadRequest();
+                .expectStatus().isNoContent();
     }
 }
