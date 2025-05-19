@@ -31,10 +31,10 @@ public class StreamingController {
         if (!ranges.isEmpty()) {
             final HttpRange range = ranges.get(0);
             final long rangeStart = range.getRangeStart(contentLength);
-            final long rangeEnd = range.getRangeEnd(contentLength);
-            if (rangeStart < 0) {
-                throw new IllegalRangeStartException("Range start must be non-negative");
+            if (rangeStart >= contentLength) {
+                throw new IllegalRangeStartException(rangeStart, contentLength);
             }
+            final long rangeEnd = range.getRangeEnd(contentLength);
             final long rangeLength = rangeEnd - rangeStart + 1;
             final byte[] partialContent = new byte[(int) rangeLength];
             try (var inputStream = videoResource.getInputStream()) {
@@ -57,13 +57,11 @@ public class StreamingController {
 
     @ExceptionHandler(VideoNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public Map<String, String> handleVideoNotFound(final VideoNotFoundException exception) {
-        return Map.of("reason", exception.getMessage());
+    public void handleVideoNotFound(final VideoNotFoundException exception) {
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Map<String, String> handleIllegalRangeStart(final IllegalArgumentException exception) {
-        return Map.of("reason", exception.getMessage());
+    public void handleIllegalRangeStart(final IllegalArgumentException exception) {
     }
 }
