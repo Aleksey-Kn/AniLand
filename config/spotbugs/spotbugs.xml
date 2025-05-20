@@ -15,4 +15,8 @@
         <Bug pattern="RR_NOT_CHECKED"/>
         <Class name="org.github.aleksey.kn.aniland.streaming.StreamingController"/>
     </Match>
+    <Match>
+        <Bug pattern="RR_NOT_CHECKED"/>
+        <Class name="org.github.aleksey.kn.aniland.streaming.StreamingControllerTest"/>
+    </Match>
 </FindBugsFilter>

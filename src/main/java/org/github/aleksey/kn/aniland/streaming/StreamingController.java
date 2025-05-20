@@ -1,6 +1,7 @@
 package org.github.aleksey.kn.aniland.streaming;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -20,6 +21,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
+@Log
 public class StreamingController {
     private final SearchVideoService searchVideoService;
 
@@ -31,7 +33,7 @@ public class StreamingController {
             return getPartialResourceResponseEntity(ranges.get(0), videoResource);
         }
         return ResponseEntity.ok()
-                .contentType(new MediaType("video" ,"mp4"))
+                .contentType(new MediaType("video", "mp4"))
                 .contentLength(videoResource.contentLength())
                 .header(HttpHeaders.ACCEPT_RANGES, "bytes")
                 .body(videoResource);
@@ -51,7 +53,7 @@ public class StreamingController {
             inputStream.read(partialContent, 0, (int) rangeLength);
         }
         final HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.setContentType(new MediaType("video" ,"mp4"));
+        responseHeaders.setContentType(new MediaType("video", "mp4"));
         responseHeaders.setContentLength(rangeLength);
         responseHeaders.setRange(List.of(HttpRange.createByteRange(rangeStart, rangeEnd)));
         responseHeaders.set(HttpHeaders.ACCEPT_RANGES, "bytes");
@@ -63,12 +65,12 @@ public class StreamingController {
     @ExceptionHandler(VideoNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public void handleVideoNotFound(final VideoNotFoundException exception) {
-        exception.printStackTrace();
+        log.warning(exception.toString());
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public void handleIllegalRangeStart(final IllegalArgumentException exception) {
-        exception.printStackTrace();
+        log.warning(exception.toString());
     }
 }
